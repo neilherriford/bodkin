@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    volumes:
+      - bodkin-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: './docker-start-dev.sh'
+    volumes:
+      - bodkin-bundle:/bundle
+      - bodkin-app-sync:/app:nocopy
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+volumes:
+  bodkin-bundle:
+  bodkin-db-data:
+  bodkin-app-sync:
+    external: true

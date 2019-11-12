@@ -1,0 +1,30 @@
+FROM ruby:2.6.5-stretch
+RUN gem install bundler
+RUN curl -sS http://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+
+RUN apt-get update && apt-get install -y \
+  nodejs \
+  redis-server \
+  yarn
+
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+
+ENV APP_HOME /app
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+ADD . $APP_HOME
+
+ENV BUNDLE_PATH=/bundle \
+  BUNDLE_BIN=/bundle/bin \
+  DB_HOST=db \
+  DB_USERNAME=postgres \
+  GEM_HOME=/bundle \
+  NODE_ENV=development \
+  RAILS_SERVER_HOST=0.0.0.0 \
+  RAILS_SERVER_PORT=3000
+
+ENV PATH="${BUNDLE_BIN}:${PATH}"

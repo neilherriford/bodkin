@@ -1,0 +1,12 @@
+version: "2"
+options:
+  verbose: true
+syncs:
+  bodkin-app-sync:
+    src: './'
+    sync_excludes: [
+      'tmp',
+      'log',
+      'node_modules',
+      'public/packs'
+    ]
