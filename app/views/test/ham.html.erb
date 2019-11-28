@@ -1,3 +1,5 @@
+<%= javascript_pack_tag 'application' %>
+
 <canvas id="canvas" width="1024" height="1024"></canvas>
 
 <script type="text/javascript">
@@ -8,5 +10,35 @@ ctx.scale(6, 6);
 ctx.font = '3px serif';
 ctx.lineWidth = 1.0;
 ctx.textAlign = 'center';
+const painter = new Painter(ctx);
 
+const insideLine = Geometry.createLine([48,34], [60,62]);
+const outsideLine = Geometry.createLine([98,34], [110,62]);
+const crossingLine = Geometry.createLine([16,34], [110,62]);
+
+const polyline = [
+  Geometry.createLine([40, 55], [44, 92]), // 3
+  Geometry.createLine([44, 92], [85, 76]), // 4
+  Geometry.createLine([85 ,76], [47, 67]), // 5
+  Geometry.createLine([47, 67], [85, 62]), // 6
+  Geometry.createLine([85 ,76], [85, 62]), // 7
+  Geometry.createLine([85, 62], [40, 55])  // 8
+];
+
+const polyline2 = [
+  Geometry.getLineById(3),
+  Geometry.getLineById(4),
+  Geometry.getLineById(5),
+  Geometry.getLineById(7),
+  Geometry.getLineById(8),
+];
+
+const bbox = new AxisAlignedBoundingBox([64, 64], 32);
+const rootQuadrant = new Quadrant(bbox, Pm1Validator);
+
+rootQuadrant.add(polyline);
+rootQuadrant.remove(Geometry.getLineById(6));
+painter.drawQuadrant(rootQuadrant);
+
+painter.drawPolyline(polyline2);
 </script>

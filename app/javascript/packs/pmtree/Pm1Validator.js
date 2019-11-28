@@ -1,0 +1,30 @@
+import Geometry from '../geometry/Geometry';
+
+const pm1Validator = (bounds, lines) => {
+  if(lines.length === 0) return true;
+
+  const first = lines[0];
+  const containsHead = bounds.containsPoint(first.head);
+  const containsTail = bounds.containsPoint(first.tail);
+
+  if(lines.length === 1) return !(containsHead && containsTail);
+  if(!(containsHead ^ containsTail)) return false;
+
+  const point = containsHead ? first.head : first.tail;
+
+  for(let index = 1; index < lines.length; ++index) {
+    const next = lines[index];
+    const isCoincidentWithHead = Geometry.pointsEqual(point, next.head);
+    const isCoincidentWithTail = Geometry.pointsEqual(point, next.tail);
+
+    if(!isCoincidentWithHead && !isCoincidentWithTail) {
+      return false;
+    }
+
+    if(isCoincidentWithHead && bounds.containsPoint(next.tail)) return false;
+    if(isCoincidentWithTail && bounds.containsPoint(next.head)) return false;
+  }
+  return true;
+};
+
+export default pm1Validator;
