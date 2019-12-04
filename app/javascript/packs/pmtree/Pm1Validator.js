@@ -8,7 +8,6 @@ const pm1Validator = (bounds, lines) => {
   const containsTail = bounds.containsPoint(first.tail);
 
   if(lines.length === 1) return !(containsHead && containsTail);
-  if(!(containsHead ^ containsTail)) return false;
 
   const point = containsHead ? first.head : first.tail;
 
