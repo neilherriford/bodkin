@@ -1,4 +1,4 @@
-import Geometry from '../geometry/Geometry';
+import LineFactory from '../geometry/LineFactory';
 
 export const OUTCODES = {
   ABOVE: 1<<3,
@@ -51,7 +51,7 @@ class AxisAlignedBoundingBox {
       let tailCode = this.code(tail);
 
       if(headCode === OUTCODES.CONTAINED && tailCode === OUTCODES.CONTAINED) {
-        return Geometry.createLine(head, tail);
+        return LineFactory.createLine(head, tail);
       }
       if(headCode & tailCode) return null;
 
@@ -83,7 +83,7 @@ class AxisAlignedBoundingBox {
       }
     }
 
-    return Geometry.createLine(head, tail);
+    return LineFactory.createLine(head, tail);
   }
 
   code(point) {

@@ -38,9 +38,10 @@ class Painter {
   }
 
   fillCircle(center, radius) {
-    ctx.beginPath();
-    ctx.arc(...center, radius, 0, 2 * Math.PI);
-    ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc(...center, radius, 0, 2 * Math.PI);
+    this.ctx.closePath();
+    this.ctx.fill();
   }
 
   drawQuadrant(quadrant, highlight = null) {
@@ -70,8 +71,8 @@ class Painter {
       this.ctx.strokeRect(...current.bounds.nw, width, width);
       this.ctx.fillRect(...current.bounds.nw, width, width);
       if(shouldLabel) {
-        ctx.fillStyle = 'violet';
-        ctx.fillText(current.id, ...Geometry.offsetPoint(current.bounds.ne, -5, 5));
+        this.ctx.fillStyle = 'violet';
+        this.ctx.fillText(current.id, ...offsetPoint(current.bounds.ne, -5, 5));
       }
 
       let children = current.children();

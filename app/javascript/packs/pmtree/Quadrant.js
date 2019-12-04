@@ -1,3 +1,5 @@
+import LineFactory from '../geometry/LineFactory';
+
 export const QUADRANT_TYPE = {
   WHITE: Symbol('WHITE'),
   GRAY: Symbol('GRAY'),
@@ -29,7 +31,7 @@ class Quadrant {
   }
 
   lines() {
-    return Geometry.getLinesByIds(Object.getOwnPropertyNames(this.lineIds));
+    return LineFactory.getLinesByIds(Object.getOwnPropertyNames(this.lineIds));
   }
 
   add(polyline) {
@@ -114,7 +116,7 @@ class Quadrant {
 
     return this.isValid(
         root.bounds,
-        Geometry.getLinesByIds(Object.getOwnPropertyNames(lineList)));
+        LineFactory.getLinesByIds(Object.getOwnPropertyNames(lineList)));
   }
 
   split() {

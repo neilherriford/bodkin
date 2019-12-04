@@ -1,4 +1,4 @@
-import Geometry from '../geometry/Geometry';
+import {equal as pointsEqual} from '../geometry/Point';
 
 const pm1Validator = (bounds, lines) => {
   if(lines.length === 0) return true;
@@ -14,8 +14,8 @@ const pm1Validator = (bounds, lines) => {
 
   for(let index = 1; index < lines.length; ++index) {
     const next = lines[index];
-    const isCoincidentWithHead = Geometry.pointsEqual(point, next.head);
-    const isCoincidentWithTail = Geometry.pointsEqual(point, next.tail);
+    const isCoincidentWithHead = pointsEqual(point, next.head);
+    const isCoincidentWithTail = pointsEqual(point, next.tail);
 
     if(!isCoincidentWithHead && !isCoincidentWithTail) {
       return false;
