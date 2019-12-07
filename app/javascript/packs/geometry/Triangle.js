@@ -5,24 +5,25 @@ import {isWithinDomain} from '../geometry/MathEx';
  * Class representing a 2d triangle
  */
 class Triangle {
-  constructor(pointA, pointB, pointC) {
-    this.pointA = pointA;
-    this.pointB = pointB;
-    this.pointC = pointC;
+  constructor(point0, point1, point2) {
+    this.point0 = point0;
+    this.point1 = point1;
+    this.point2 = point2;
   }
 
   /**
    * Converts the provided cartesian point into a barycentric triple, relative
    * to the points defining this triangle.
    *
+   * From Christer Ericson's _Real-Time Collision Detection_.
    * @param {number[]} point - The point to convert
    * @return {number[]}
    *
    */
   toBarycentric(point) {
-    const v0 = subtractPoints(this.pointB, this.pointA);
-    const v1 = subtractPoints(this.pointC, this.pointA);
-    const v2 = subtractPoints(point,       this.pointA);
+    const v0 = subtractPoints(this.point1, this.point0);
+    const v1 = subtractPoints(this.point2, this.point0);
+    const v2 = subtractPoints(point,       this.point0);
     const d00 = dotProduct(v0, v0);
     const d01 = dotProduct(v0, v1);
     const d11 = dotProduct(v1, v1);
@@ -47,12 +48,12 @@ class Triangle {
    */
   toCartesian(barycentric) {
     return [
-      barycentric[0] * this.pointA[0]
-      + barycentric[1] * this.pointB[0]
-      + barycentric[2] * this.pointC[0],
-      barycentric[0] * this.pointA[1]
-      + barycentric[1] * this.pointB[1]
-      + barycentric[2] * this.pointC[1]
+      barycentric[0] * this.point0[0]
+      + barycentric[1] * this.point1[0]
+      + barycentric[2] * this.point2[0],
+      barycentric[0] * this.point0[1]
+      + barycentric[1] * this.point1[1]
+      + barycentric[2] * this.point2[1]
     ];
   }
 
