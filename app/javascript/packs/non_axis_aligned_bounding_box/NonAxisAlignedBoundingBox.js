@@ -149,7 +149,7 @@ class NonAxisAlignedBoundingBox {
 
   /**
    * Tests if the provided point is contained by the bounding region.  Returns
-   * true if contained, false otherwise.
+   * true if contained, false otherwise.  The bounds are inclusive.
    * @param  {number[]} point - The point to test
    * @return {boolean}       Returns true if the provided point is contained
    *                         by the region, false otherwise
